@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+option csharp_namespace = "DiscountManager.Shared";
+
+package DiscountManager;
+
+// The discount service definition.
+service Discount {
+  // Get discount codes
+  rpc GetCodes (GetCodesRequest) returns (GetCodesReply);
+
+  // Generate discount codes
+  rpc GenerateCodes (GenerateRequest) returns (GenerateReply);
+  
+  // Code usage
+  rpc UseCode (CodeRequest) returns (CodeReply);
+
+}
+
+// The request message containing the generations options.
+message GetCodesRequest { }
+
+// The response message containing the generate result.
+message GetCodesReply {
+  bytes result = 1;
+}
+
+// The request message containing the generations options.
+message GenerateRequest {
+  uint32 count = 1;
+  bytes length = 2;
+}
+
+// The response message containing the generate result.
+message GenerateReply {
+  bool result = 1;
+}
+
+
+// The request message containing the requested code.
+message CodeRequest {
+  string code = 1;
+}
+
+// The response message containing the code response.
+message CodeReply {
+  bytes result = 1;
+}

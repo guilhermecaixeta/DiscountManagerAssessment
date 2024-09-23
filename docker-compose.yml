@@ -1,0 +1,40 @@
+services:
+  discountmanager:
+    image: ${DOCKER_REGISTRY-}discountmanager
+    build:
+      context: .
+      dockerfile: DiscountManager/Dockerfile
+    networks:
+      - discount_manager_network
+
+  discountfrontend:
+    image: ${DOCKER_REGISTRY-}discountfrontend
+    build:
+      context: .
+      dockerfile: DiscountFrontend/Dockerfile
+    networks:
+      - discount_manager_network
+    depends_on:
+      - discountmanager
+  
+  postgres:
+    image: postgres:12-alpine
+    restart: always
+    env_file:
+      - path: ./postgres.env
+        required: true    
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - discount_manager_network
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  discount_manager_network:
+    external: false
+    name: discount_manager_network

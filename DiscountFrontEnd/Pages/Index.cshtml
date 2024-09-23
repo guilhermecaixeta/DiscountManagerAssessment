@@ -1,0 +1,102 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">
+        Discount codes
+    </h1>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <h4>Send Request</h4>
+            <form method="post" asp-page-handler="GenerateCode">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="GenerateDiscountCode.Count" class="control-label"></label>
+                        <input asp-for="GenerateDiscountCode.Count" class="form-control" />
+                        <span asp-validation-for="GenerateDiscountCode.Count" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="GenerateDiscountCode.Length" class="control-label"></label>
+                        <input asp-for="GenerateDiscountCode.Length" class="form-control" />
+                        <span asp-validation-for="GenerateDiscountCode.Length" class="text-danger"></span>
+                    </div>
+                </div>
+                <hr />
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+        <div class="col-md-4">
+            <h4>List Codes</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Code
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Codes)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <h4>Check Code</h4>
+            <form method="post" asp-page-handler="CheckCode" novalidate>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Code" class="control-label"></label>
+                        <input asp-for="Code" class="form-control" />
+                        <span asp-validation-for="Code" class="text-danger"></span>
+                    </div>
+                </div>
+                <hr />
+                <div class="form-group">
+                    <input type="submit" value="Check" class="btn btn-primary" />
+                </div>
+            </form>
+            @if (Model.DiscountCode is not null)
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.DiscountCode.Code)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.DiscountCode.Status)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.DiscountCode.Code)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.DiscountCode.Status)
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>
