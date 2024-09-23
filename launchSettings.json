@@ -2,13 +2,14 @@
   "profiles": {
     "Docker Compose": {
       "commandName": "DockerCompose",
-      "launchBrowser": true,
-      "applicationUrl": "https://localhost:5052/",
-      "sslPort": 5052,
-      "httpPort": 5051,
       "commandVersion": "1.0",
+      "composeLaunchAction": "LaunchBrowser",
+      "composeLaunchServiceName": "discountfrontend",
+      "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}",
       "serviceActions": {
-        "discountmanager": "StartDebugging"
+        "discountmanager": "StartDebugging",
+        "discountfrontend": "StartDebugging",
+        "postgres": "StartWithoutDebugging"
       }
     }
   }
